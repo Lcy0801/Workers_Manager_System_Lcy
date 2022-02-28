@@ -25,6 +25,15 @@ int Worker::getDepId()
 	return m_DepId;
 }
 
+bool Worker::operator>(Worker * worker)
+{
+	if (m_Id > worker->getId())
+	{
+		return true;
+	}
+	return false;
+}
+
 
 Employee::Employee(int id, string name, int depId) :Worker(id, name, depId) {};
 Employee::~Employee() {};

@@ -10,6 +10,7 @@ public:
 	string getName();
 	int getDepId();
 	virtual string doWork() = 0;
+	bool operator>(Worker * worker);
 private:
 	int m_Id;
 	string m_Name;

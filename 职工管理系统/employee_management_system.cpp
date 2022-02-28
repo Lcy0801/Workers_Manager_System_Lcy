@@ -48,12 +48,16 @@ int main()
 			}
 			break;
 		case 4://修改职工
+			workerManager.modifyEmployee();
 			break;
 		case 5://查找职工
+			workerManager.searchEmployee();
 			break;
 		case 6://排序职工
+			workerManager.sortEmployees();
 			break;
 		case 7://清空文档
+			workerManager.emptyAll();
 			break;
 		default:
 			cout << "操作错误!" << endl;

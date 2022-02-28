@@ -19,5 +19,5 @@ public:
 	void sortEmployees();
 	void emptyAll();
 	bool idExists(int id);
-	bool nameExists(const char * name);
+	bool nameExists(const char * name);	
 };

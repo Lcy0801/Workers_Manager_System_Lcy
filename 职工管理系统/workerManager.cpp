@@ -216,7 +216,140 @@ void WorkerManager::delEmployee(int id, const char * name)
 		fprintf(f, "%d\t%s\t%d\n", workers[i]->getId(), (workers[i]->getName()).c_str(), workers[i]->getDepId());
 	}
 	fclose(f);
+	delete[] workers;
 	return;
 }
-	
+
+void WorkerManager::modifyEmployee()
+{
+	int id;
+	cout << "请输入待修改信息的职工编号：" << endl;
+	cin >> id;
+	bool flag = idExists(id);
+	if (!flag)
+	{
+		cout << "该用户不存在!" << endl;
+		return;
+	}
+	delEmployee(id);
+	addEmployee();
+	return;
+}
+
+void WorkerManager::searchEmployee()
+{
+	int sType;
+	cout << "按职工Id检索，请输入0；按职工姓名检索，请输入1";
+	cin >> sType;
+	string name="";
+	int id=-1;
+	if (sType == 0)
+	{
+		cout << "请输入职工Id：" << endl;
+		cin >> id;
+	}
+	else if(sType==1)
+	{
+		cout << "请输入职工姓名：" << endl;
+		cin >> name;
+	}
+	else
+	{
+		cout << "输入错误" << endl;
+		return;
+	}
+	FILE * f = fopen(m_employeesFile.c_str(), "r");
+	if (f == NULL)
+	{
+		cout << "未检索到该员工信息!" << endl;
+		return;
+	}
+	int fid, fdepId;
+	char fname[20];
+	while (!feof(f))
+	{
+		fscanf(f, "%d\t%s\t%d\n", &fid, fname, &fdepId);
+		if (fid == id || strcmp(fname, name.c_str()) == 0)
+		{
+			cout << fid << "\t" << fname << "\t" << fdepId << endl;
+		}
+	}
+	return;
+}
+//关系运算符重载，用于直接比较两个指向worker的指针
+
+void WorkerManager::sortEmployees()
+{
+	FILE * f = fopen(m_employeesFile.c_str(), "r");
+	if (f == NULL)
+	{
+		cout << "排序完毕!" << endl;
+		return;
+	}
+	Worker * workers[1000];
+	int n = 0;
+	int id, depId;
+	char name[20];
+	while (!feof(f))
+	{
+		if (fscanf(f, "%d\t%s\t%d\n", &id, name, &depId) != 3)
+		{
+			break;
+		}
+		if (depId == 1)
+		{
+			workers[n] = new Boss(id, string(name), depId);
+		}
+		else if (depId == 2)
+		{
+			workers[n] = new Manager(id, string(name), depId);
+		}
+		else
+		{
+			workers[n] = new Employee(id, string(name), depId);
+		}
+		n++;
+	}
+	fclose(f);
+	if (n >= 2)
+	{
+		bool flag;
+		for (int i = 0; i < n-1; i++)
+		{
+			flag = true;
+			for (int j = 0;j < n - 1 - i;j++)
+			{
+				if (*workers[j] > workers[j + 1])
+				{
+					Worker * tmp = workers[j];
+					workers[j] = workers[j + 1];
+					workers[j + 1] = tmp;
+					flag = false;
+				}
+			}
+			if (flag)
+			{
+				break;
+			}
+		}
+	}
+	//输出排序信息，写入排序信息
+	f = fopen(m_employeesFile.c_str(), "w");
+	for (int i = 0;i < n;i++)
+	{
+		fprintf(f, "%d\t%s\t%d\n", workers[i]->getId(), (workers[i]->getName()).c_str(), workers[i]->getDepId());
+		cout << workers[i]->getId()<<"\t" <<workers[i]->getName()<<"\t"<< workers[i]->getDepId()<<endl;
+	}
+	fclose(f);
+	cout << "排序完毕!" << endl;
+}
+
+void WorkerManager::emptyAll()
+{
+	FILE * f = fopen(m_employeesFile.c_str(), "w");
+	fclose(f);
+	cout << "数据已清空完毕!" << endl;
+	return;
+}
+
 
