@@ -1,19 +1,23 @@
 #pragma once //防止头文件重复包含
+#include <string>
+using namespace std;
 class WorkerManager
 {
+private:
+	string m_employeesFile;//职工信息存放处
 public:
-	WorkerManager();
+	WorkerManager(string employeesFile);
 	~WorkerManager();
 	void showMenu();
 	void exitSystem(); 
-	bool addEmployee();
+	void addEmployee();
+	void batchAddEmployees();
 	void showEmployees();
-	void delEmployee();
+	void delEmployee(int id=-1,const char * name="");
 	void modifyEmployee();
 	void searchEmployee();
 	void sortEmployees();
 	void emptyAll();
-private:
-	int m_N=0;//职工人数
-	char m_employeesFile[100];//职工信息存放处
+	bool idExists(int id);
+	bool nameExists(const char * name);
 };

@@ -10,40 +10,40 @@ Worker::Worker(int id, string name,int depId)
 	m_DepId = depId;
 }
 Worker::~Worker() {};
-void Worker::showName()
+string Worker::getName()
 {
-	cout << m_Name;
+	return m_Name;
 }
 
-void Worker::showId() 
+int Worker::getId() 
 {
-	cout << m_Id;
+	return m_Id;
 }
 
-void Worker::showDepId()
+int Worker::getDepId()
 {
-	cout << m_DepId;
+	return m_DepId;
 }
 
 
 Employee::Employee(int id, string name, int depId) :Worker(id, name, depId) {};
 Employee::~Employee() {};
-void Employee::doWork()
+string Employee::doWork()
 {
-	cout << "我需要完成经理交代的任务!";
+	return "我需要完成经理交代的任务!";
 }
 
 Manager::~Manager() {};
 Manager::Manager(int id, string name, int depId) :Worker(id, name, depId) {};
-void Manager::doWork()
+string Manager::doWork()
 {
-	cout << "我需要完成老板交代的任务，并向员工下达任务!";
+	return "我需要完成老板交代的任务，并向员工下达任务!";
 }
 
 
 Boss::~Boss() {};
 Boss::Boss(int id, string name, int depId) :Worker(id, name, depId) {};
-void Boss::doWork()
+string Boss::doWork()
 {
-	cout << "我需要管理整个公司!";
+	return "我需要管理整个公司!";
 }

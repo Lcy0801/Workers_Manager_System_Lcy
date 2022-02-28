@@ -6,10 +6,10 @@ class Worker
 public:
 	Worker(int id, string name, int dptId);
 	~Worker();
-	void showId();
-	void showName();
-	void showDepId();
-	virtual void doWork() = 0;
+	int getId();
+	string getName();
+	int getDepId();
+	virtual string doWork() = 0;
 private:
 	int m_Id;
 	string m_Name;
@@ -21,7 +21,7 @@ class Employee:public Worker
 public:
 	Employee(int id, string name, int depId);
 	~Employee();
-	virtual void doWork();
+	virtual string doWork();
 private:
 
 };
@@ -31,7 +31,7 @@ class Manager:public Worker
 public:
 	Manager(int id, string name, int depId);
 	~Manager();
-	virtual void doWork();
+	virtual string doWork();
 
 private:
 
@@ -42,7 +42,7 @@ class Boss:public Worker
 public:
 	Boss(int id, string name, int depId);
 	~Boss();
-	virtual void doWork();
+	virtual string doWork();
 private:
 
 };
